@@ -1,0 +1,50 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "title": "Median Household Income across Malaysia in 2022",
+  "width": 700,
+  "height": 500,
+  
+  "data": {
+    "url": "https://raw.githubusercontent.com/ypy-ifa/FIT3179/main/json/my_map.json",
+    "format": {
+      "type": "topojson",
+      "feature": "my"
+    }
+  },
+
+  "projection": {
+    "type": "equalEarth"
+  },
+
+  "transform": [
+    {
+      "lookup": "properties.name",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/ypy-ifa/FIT3179/main/data/hies_state.csv"
+        },
+        "key": "state",
+        "fields": ["income_median"]
+      }
+    }
+  ],
+
+  "mark": {
+    "type": "geoshape",
+    "stroke": "white",
+    "strokeWidth": 0.5
+  },
+
+  "encoding": {
+    "color": {
+      "field": "income_median",
+      "type": "quantitative",
+      "title": "Median Household Income (RM)",
+      "scale": {"scheme": "yellowgreenblue"}
+    },
+    "tooltip": [
+      {"field": "properties.name", "type": "nominal", "title": "State"},
+      {"field": "income_median", "type": "quantitative", "title": "Median Income (RM)"}
+    ]
+  }
+}
