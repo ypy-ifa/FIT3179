@@ -1,0 +1,66 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "title": "Avg. monthly household expenditure by category in Malaysia (2004-2019)",
+  "width":650,
+  "height":500,
+  
+  "data": {"url": "https://raw.githubusercontent.com/ypy-ifa/FIT3179/main/data/grouped_expenditure.csv"},
+  
+  "params": [
+    {
+      "name": "selectedYear",
+      "value": 2019,
+      "bind": {
+        "input": "select",
+        "options": [2004, 2009, 2014, 2019],
+        "labels": ["2004", "2009", "2014", "2019"],
+        "name": "Select Year: "
+      }
+    }
+  ],
+
+  "transform": [
+    {"filter": "datum.Year == selectedYear"}
+  ],
+
+  "mark": "bar",
+
+  "encoding": {
+    "x": {
+      "field": "Mean monthly household consumption expenditure (RM)",
+      "type": "quantitative",
+      "title": "Mean Monthly Expenditure (RM)",
+      "scale": {"domain":[0,1000]}
+    },
+    "y": {
+      "field": "Expenditure group",
+      "type": "nominal",
+      "title": "Expenditure Category",
+      "sort": "-x",
+      "axis": {
+      "labelFontSize": 11,
+      "labelAngle":-30
+    }
+  },
+    "color": {
+      "field": "Category",
+      "type": "nominal",
+      "legend": null,
+      "scale": {
+        "scheme": "tableau10"
+      }
+    },
+    "tooltip": [
+      {"field": "Expenditure group", "title": "Category"},
+      {"field": "Year", "title": "Year"},
+      {"field": "Mean monthly household consumption expenditure (RM)",
+      "title": "Mean Monthly Expenditure (RM)",
+      "format": ",.0f"}
+    ]
+  },
+
+  "config": {
+    "axis": {"titleFontSize": 14, "labelFontSize": 12},
+    "view": {"stroke": "transparent"}
+  }
+}
