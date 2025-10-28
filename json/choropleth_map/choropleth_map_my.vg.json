@@ -40,7 +40,7 @@
       "field": "income_median",
       "type": "quantitative",
       "title": "Median Household Income (RM)",
-      "scale": {"scheme": "yellowgreenblue"}
+      "scale": {"scheme": "blues"}
     },
     "tooltip": [
       {"field": "properties.name", "type": "nominal", "title": "State"},
