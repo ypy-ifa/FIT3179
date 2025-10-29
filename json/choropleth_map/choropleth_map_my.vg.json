@@ -1,11 +1,15 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-  "title": "Median Household Income across Malaysia in 2022",
+  "title": {
+    "text": "Median Household Income across Malaysia in 2022",
+    "fontSize": 20,
+    "offset":15
+  },
   "width": 700,
   "height": 500,
   
   "data": {
-    "url": "https://raw.githubusercontent.com/ypy-ifa/FIT3179/main/json/my_map.json",
+    "url": "https://raw.githubusercontent.com/ypy-ifa/FIT3179/main/json/choropleth_map/my_map.json",
     "format": {
       "type": "topojson",
       "feature": "my"
@@ -46,5 +50,8 @@
       {"field": "properties.name", "type": "nominal", "title": "State"},
       {"field": "income_median", "type": "quantitative", "title": "Median Income (RM)"}
     ]
+  },
+    "config": {
+    "axis": {"titleFontSize": 16, "labelFontSize": 12}
   }
 }

@@ -1,7 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Household Income vs Expenditure across all States in Malaysia (2022)",
-  "width": 600,
+  "title": {
+    "text": "Household Income vs Expenditure across all States in Malaysia (2022)",
+    "fontSize": 20,
+    "offset":15    
+    },
+  "width": 700,
   "height": 400,
   
   "data": {
@@ -61,6 +65,7 @@
   },
   "config": {
     "legend": {"orient": "right"},
-    "view": {"stroke": "transparent"}
+    "view": {"stroke": "transparent"},
+    "axis": {"titleFontSize": 16, "labelFontSize": 12}
   }
 }

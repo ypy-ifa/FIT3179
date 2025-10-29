@@ -2,37 +2,93 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Interactive Household Expenditure Charts</title>
+  <title>Household Income vs Expenditure in Malaysia</title>
 
   <!-- Load Vega, Vega-Lite, and Vega-Embed -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
+  <link rel="stylesheet" href="css\style.css">
 </head>
 <body>
-  <h2>Interactive Household Expenditure Visualisation</h2>
-  <div class="chart-container">
-    <div id="line" class="chart"></div>
-    <div id="bar" class="chart"></div>
-  </div>
+  <h1><b>Household Income vs Expenditure across all States in Malaysia</b></h1>
+
+  <!-- Visualization Layout -->
+  <!-- Section 1: Choropleth Map -->
+   <section class="viz-section">
+    <div id="choropleth" class="chart"></div>
+    <div class="space"></div>
+    <div class="text">
+        <h2>Choropleth Map: Household Income (RM) by States</h2>
+        <p>The choropleth map highlights the median Household Income (RM) across every state in Malaysia.</p>
+        <ul>
+            <li>Darker / dark blue shades indicating a higher Median Household Income of up to RM10000.</li>
+            <li>Lighter / light blue shades indicating a lower Median Household down to 4000.</li>
+            <li>Map highlights how differences and inequalities in Household Income vary across every state.</li>
+            <li>Kuala Lumpur and Putrajaya having the highest Median Household Income of over RM10000.</li>
+        </ul>
+    </div>
+   </section>
+
+  <!-- Section 2: Line Chart and Bar Chart -->
+   <section class="viz-section">
+    <div class="chart-group">
+        <div id="line" class="chart"></div>
+        <div id="bar" class="chart"></div>
+    </div>
+    <div class="space"></div>
+    <div class="text">
+        <h2>Interactive Line and Bar Chart: Household Expenditure by Category</h2>
+        <p>Both the line chart and the bar chart illustrate how the Mean monthly Expenditure of various Expenditure categories have changed throughout the years in Malaysia.</p>
+        <ul>
+          <li>Line chart highlighting trends and change over time between categories.</li>
+          <li>Bar chart focusing on comparison between categories and total average monthly Expenditure.</li>
+          <li>Clicking lines / bars highlights the respective Expenditure Category.</li>
+          <li>Year filter at bottom of bar chart to select displayed Time frame of Mean Expenditure of categories for bar chart.</li>
+          <li>Housing, water, electricity, etc. having the highest Household Expenditure throughout the entire time frame.</li>
+          <li>Housing, water, electricity, etc. taking up well over RM10000 Mean Monthly Household Expenditure as of 2019.</li>
+        </ul>
+    </div>
+   </section>
+
+  <!-- Section 3: Scatterplot -->
+   <section class="viz-section">
+    <div id="scatter" class="chart"></div>
+    <div class="space"></div>
+    <div class="text">
+        <h2>Scatterplot: Household Income vs Expenditure (RM)</h2>
+        <p>The scatterplot highlights the relationship between the Mean Household Expenditure and Median Household Income in Malaysia.</p>
+        <ul>
+          <li>Additionally showing the Gini Coefficient and Poverty rate of every state.</li>
+          <li>The upward trend indicating a positive correlation.</li>
+          <li>Putrajaya and Selangor having the highest Mean Expenditure of up to RM8000 and Median Income of over RM10000.</li>
+          <li>Gini Coefficient varies between states with all of them hovering between 0.3 and 0.4, indicating slight difference in household income equality among States.</li>
+          <li>Poverty rate also varies between states, fluctuating between 0-20%, showing high difference in poverty probability and prominence among States.</li>
+        </ul>
+    </div>
+   </section>
 
   <script type="module">
     // Load both charts
+    var choroplethSpecUrl = "json/choropleth_map/choropleth_map_my.vg.json";
     var lineSpecUrl = "json/line_chart/line_chart.vg.json";
     var barSpecUrl  = "json/bar_chart/bar_chart.vg.json";
+    var scatterSpecUrl = "json/scatterplot/scatterplot.vg.json";
 
-    const [lineEmbed, barEmbed] = await Promise.all([
+    var [choroplethEmbed, lineEmbed, barEmbed, scatterEmbed] = await Promise.all([
+        vegaEmbed("#choropleth", choroplethSpecUrl, {actions: false}),
         vegaEmbed("#line", lineSpecUrl, {actions: false}),
-        vegaEmbed("#bar",  barSpecUrl,  {actions: false})
+        vegaEmbed("#bar",  barSpecUrl,  {actions: false}),
+        vegaEmbed("#scatter", scatterSpecUrl, {actions: false})
     ]);
 
+    var choroplethView = choroplethEmbed.view;
     var lineView = lineEmbed.view;
     var barView  = barEmbed.view;
+    var scatterView = scatterEmbed.view;
 
     // Listen to signal changes in both charts and sync selections
-    // Assuming each chart defines "line_select" and "bar_select"
     lineView.addSignalListener("shared_select_tuple", (name, value) => {
       // When user clicks a line, send signal to bar chart
       barView.signal("shared_select_tuple", value).run();

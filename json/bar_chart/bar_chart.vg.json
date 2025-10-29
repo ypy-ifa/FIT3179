@@ -1,8 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-  "title": "Avg. monthly household expenditure by category in Malaysia (2004-2019)",
+  "title": {"text":"Avg. monthly household expenditure by category in Malaysia (2004-2019)",
+  "fontSize":20,
+  "offset": 15
+  },
   "width":600,
-  "height":400,
+  "height":300,
   
   "data": {"url": "https://raw.githubusercontent.com/ypy-ifa/FIT3179/main/data/grouped_expenditure.csv"},
   
@@ -69,7 +72,7 @@
   },
 
   "config": {
-    "axis": {"titleFontSize": 14, "labelFontSize": 12},
+    "axis": {"titleFontSize": 16, "labelFontSize": 12},
     "view": {"stroke": "transparent"}
   }
 }
