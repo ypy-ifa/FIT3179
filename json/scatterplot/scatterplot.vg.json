@@ -1,0 +1,66 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Household Income vs Expenditure across all States in Malaysia (2022)",
+  "width": 600,
+  "height": 400,
+  
+  "data": {
+    "url": "https://raw.githubusercontent.com/ypy-ifa/FIT3179/main/data/hies_state.csv"
+  },
+  "mark": {
+    "type": "circle",
+    "tooltip": true,
+    "opacity": 0.7
+  },
+  "params": [
+    {
+      "name": "point_hover",
+      "select": {
+          "type": "point",
+          "fields": ["state"],
+          "on": "mouseover",
+          "clear": "mouseout"
+      }
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "income_median",
+      "type": "quantitative",
+      "title": "Median Household Income (RM)"
+    },
+    "y": {
+      "field": "expenditure_mean",
+      "type": "quantitative",
+      "title": "Mean Household Expenditure (RM)"
+    },
+    "size": {
+      "field": "gini",
+      "type": "quantitative",
+      "title": "Gini Coefficient",
+      "scale": {"domain": [0.30, 0.40], "range": [100, 1000]}
+    },
+    "color": {
+      "field": "state",
+      "type": "nominal",
+      "title": "State",
+      "scale": {"scheme": "category20"}
+    },
+    "opacity": {
+        "condition": 
+        {"param": "point_hover", "value": 0.7},
+        "value": 0.2
+    },
+    "tooltip": [
+      {"field": "state", "type": "nominal", "title": "State"},
+      {"field": "income_median", "type": "quantitative", "title": "Median Income (RM)"},
+      {"field": "expenditure_mean", "type": "quantitative", "title": "Mean Expenditure (RM)"},
+      {"field": "gini", "type": "quantitative", "title": "Gini Coefficient"},
+      {"field": "poverty", "type": "quantitative", "title": "Poverty Rate (%)"}
+    ]
+  },
+  "config": {
+    "legend": {"orient": "right"},
+    "view": {"stroke": "transparent"}
+  }
+}
