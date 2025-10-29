@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Household Expenditure Charts</title>
+
+  <!-- Load Vega, Vega-Lite, and Vega-Embed -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+</head>
+<body>
+  <h2>Interactive Household Expenditure Visualisation</h2>
+  <div class="chart-container">
+    <div id="line" class="chart"></div>
+    <div id="bar" class="chart"></div>
+  </div>
+
+  <script type="module">
+    // Load both charts
+    var lineSpecUrl = "json/line_chart/line_chart.vg.json";
+    var barSpecUrl  = "json/bar_chart/bar_chart.vg.json";
+
+    const [lineEmbed, barEmbed] = await Promise.all([
+        vegaEmbed("#line", lineSpecUrl, {actions: false}),
+        vegaEmbed("#bar",  barSpecUrl,  {actions: false})
+    ]);
+
+    var lineView = lineEmbed.view;
+    var barView  = barEmbed.view;
+
+    // Listen to signal changes in both charts and sync selections
+    // Assuming each chart defines "line_select" and "bar_select"
+    lineView.addSignalListener("shared_select_tuple", (name, value) => {
+      // When user clicks a line, send signal to bar chart
+      barView.signal("shared_select_tuple", value).run();
+    });
+
+    barView.addSignalListener("shared_select_tuple", (name, value) => {
+      // When user clicks a bar, send signal to line chart
+      lineView.signal("shared_select_tuple", value).run();
+    });
+  </script>
+</body>
+</html>

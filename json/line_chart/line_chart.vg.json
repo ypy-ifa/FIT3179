@@ -1,0 +1,54 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Mean Monthly Household Expenditure by Category in Malaysia (2004–2019)",
+  "width": 700,
+  "height": 450,
+  "description": "Trends in household expenditure across 12 categories (2004–2019)",
+  "data": {"url": "https://raw.githubusercontent.com/ypy-ifa/FIT3179/main/data/grouped_expenditure.csv"},
+
+  "params": [{
+    "name": "shared_select",
+    "select": {
+        "type": "point",
+        "fields": ["Expenditure group"],
+        "on": "click"
+        }
+      }
+  ],
+  
+  "mark": {"type": "line", "point": true},
+  
+  "encoding": {
+    "x": {"field": "Year",
+    "type": "ordinal",
+    "title": "Year",
+    "axis": {
+        "labelAngle": 0
+        }
+    }, 
+    "y": {"field": "Mean monthly household consumption expenditure (RM)",
+    "type": "quantitative",
+    "title": "Mean Monthly Expenditure (RM)"
+    },
+    "color": {
+        "field": "Expenditure group",
+        "type": "nominal",
+        "title": "Expenditure Group",
+        "scale": {"scheme": "tableau20"},
+        "legend": {
+            "symbolType": "stroke",
+            "orient": "right"
+        }
+    },
+    "opacity": {
+      "condition": 
+        {"param": "shared_select", "value": 1},
+      "value": 0.2
+    },
+    "tooltip": [
+      {"field": "Expenditure group", "type": "nominal"},
+      {"field": "Year", "type": "ordinal"},
+      {"field": "Mean monthly household consumption expenditure (RM)", "type": "quantitative", "title": "Avg monthly household expenditure (RM)"}
+    ]
+  }
+}
