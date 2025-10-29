@@ -70,3 +70,31 @@ body {
   padding-left: 20px;
   line-height: 1.7;
 }
+
+.footer {
+  text-align: left;
+  background-color: #ffffff;
+  padding: 20px 20px;
+  font-size: 14px;
+  color: #555;
+  border-top: 1px solid #ddd;
+}
+
+.footer ul {
+  list-style-type: none;
+  margin: 10px 0;
+  padding: 0;
+}
+
+.footer li {
+  margin: 5px 0;
+}
+
+.footer a {
+  color: #0a4a8b;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
